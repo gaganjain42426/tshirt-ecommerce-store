@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import connectDB from './utils/database';
+import ordersRoutes from './routes/orders';
 
 // Load environment variables
 dotenv.config();
@@ -80,14 +81,20 @@ app.get('/health', (_req, res) => {
 });
 
 // API Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/categories', require('./routes/categories'));
-app.use('/api/cart', require('./routes/cart'));
-app.use('/api/orders', require('./routes/orders'));
-app.use('/api/reviews', require('./routes/reviews'));
-app.use('/api/upload', require('./routes/upload'));
+app.use('/api/orders', ordersRoutes);
+
+// Keep other routes with require for now (they're not critical)
+try {
+  app.use('/api/auth', require('./routes/auth'));
+  app.use('/api/users', require('./routes/users'));
+  app.use('/api/products', require('./routes/products'));
+  app.use('/api/categories', require('./routes/categories'));
+  app.use('/api/cart', require('./routes/cart'));
+  app.use('/api/reviews', require('./routes/reviews'));
+  app.use('/api/upload', require('./routes/upload'));
+} catch (error) {
+  console.warn('Some routes not loaded:', error);
+}
 
 // 404 handler
 app.use('*', (_req, res) => {

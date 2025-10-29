@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 }).limit(100);
+    const orders = await Order.find({}).sort({ createdAt: -1 }).limit(100).exec();
     
     res.json({ 
       success: true,
@@ -110,7 +110,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const order = await Order.findOne({ orderId: id });
+    const order = await Order.findOne({ orderId: id }).exec();
     
     if (!order) {
       return res.status(404).json({

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -42,6 +42,13 @@ export default function CheckoutPage() {
 
   const shipping = cartTotal > 0 ? (cartTotal >= 1000 ? 0 : 99) : 0;
   const total = cartTotal + shipping;
+
+  // Redirect to cart if empty
+  useEffect(() => {
+    if (cartCount === 0) {
+      router.push('/cart');
+    }
+  }, [cartCount, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShippingAddress({
@@ -225,8 +232,8 @@ export default function CheckoutPage() {
     }
   };
 
+  // Show nothing while redirecting
   if (cartCount === 0) {
-    router.push('/cart');
     return null;
   }
 

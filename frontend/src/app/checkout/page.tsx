@@ -124,7 +124,7 @@ export default function CheckoutPage() {
 
         // Try to send to backend as secondary storage (optional)
         try {
-          const apiResponse = await fetch('http://localhost:5000/api/orders', {
+          const apiResponse = await fetch('https://tshirt-backend-ijf6.onrender.com/api/orders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ export default function CheckoutPage() {
 
     // Try to send to backend as secondary storage (optional)
     try {
-      const apiResponse = await fetch('http://localhost:5000/api/orders', {
+      const apiResponse = await fetch('https://tshirt-backend-ijf6.onrender.com/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
